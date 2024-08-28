@@ -114,7 +114,7 @@ void Examples::stageAndUnstageSomeFiles()
 {
     verifyNothingModified();
 
-    QString filename = "testpath/testclass1.cpp";
+    QString filename = "subdir/testclass1.cpp";
     modifyFile(filename);
 
     StatusEntry::List modified = _repository->status().modified();
@@ -159,7 +159,7 @@ void Examples::commitSomeChangesAndResetHard()
         throw TestException("Failed to find head commit");
     }
 
-    QString filename = "testpath/testclass1.cpp";
+    QString filename = "subdir/testclass1.cpp";
     modifyFile(filename);
 
     StatusEntry::List modified = _repository->status().modified();
@@ -188,7 +188,7 @@ void Examples::commitSomeChangesAndResetHard()
 
 void Examples::createAndDeleteLightweightTag()
 {
-    Commit commit = _repository->findCommit("e63866f70dc3d7d193a0a22d943cb4d6c257dda7");
+    Commit commit = _repository->findCommit("fac4c156026e8f20ac701585a07705b06b7f57b0");
     if(commit.isNull()) {
         throw TestException("Failed to find commit");
     }
@@ -221,7 +221,7 @@ void Examples::createAndDeleteLightweightTag()
 
 void Examples::createAndDeleteAnnotatedTag()
 {
-    Commit commit = _repository->findCommit("e63866f70dc3d7d193a0a22d943cb4d6c257dda7");
+    Commit commit = _repository->findCommit("fac4c156026e8f20ac701585a07705b06b7f57b0");
     if(commit.isNull()) {
         throw TestException("Failed to find commit");
     }
@@ -264,8 +264,8 @@ void Examples::createAndDumpSomeDiffs()
     }
 
     QStringList filenames = {
-        "testpath/testclass1.cpp",
-        "testpath/testclass1.h",
+        "subdir/testclass1.cpp",
+        "subdir/testclass1.h",
     };
 
     for(const QString& filename : filenames) {
