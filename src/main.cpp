@@ -8,6 +8,7 @@
 
 #include "examples.h"
 #include "testexception.h"
+#include "testthread.h"
 
 const QString keyHelp               = "help";
 const QString keyLocalPath          = "local-path";
@@ -15,12 +16,14 @@ const QString keyVerbose            = "verbose";
 
 const QString verbAuto              = "auto";
 const QString verbClone             = "clone";
+const QString verbExamples          = "examples";
 const QString verbTest              = "test";
 
 const QStringList VALID_VERBS =
 {
     verbAuto,
     verbClone,
+    verbExamples,
     verbTest,
 };
 
@@ -86,13 +89,18 @@ int main(int argc, char *argv[])
             throw TestException(QString("Invalid verb:  (%1)").arg(verb));
         }
 
-        if(verb == verbTest) {
+        if(verb == verbExamples) {
             Examples examples(localPath);
             examples.unstageAllFiles();
         }
         else if(verb == verbAuto) {
             Examples examples(localPath);
             examples.autoTest();
+        }
+        else if(verb == verbTest) {
+            TestThread t(localPath);
+            t.start();
+            t.waitForCompletion();
         }
         else if(verb == verbClone) {
             QFileInfo fileInfo(localPath);

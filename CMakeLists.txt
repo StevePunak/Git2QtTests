@@ -31,4 +31,4 @@ target_include_directories(${PROJ} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/${PRO
 # Additional Qt packages
 find_package(Qt6 REQUIRED COMPONENTS Core)
 target_link_libraries(${PROJ} PRIVATE Qt6::Core)
-target_link_libraries(${PROJ} PRIVATE git2qt)
+target_link_libraries(${PROJ} PRIVATE git2qt KanoopCommon)

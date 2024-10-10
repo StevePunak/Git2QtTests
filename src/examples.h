@@ -35,7 +35,7 @@ private:
     QString _errorText;
 };
 
-class ExampleCredentialResolver : public GIT::CredentialResolver
+class ExampleCredentialResolver : public GIT::AbstractCredentialResolver
 {
 public:
     virtual QString getUsername() const override { return "libgit2qt_tester"; }
@@ -45,7 +45,7 @@ public:
 class ExampleProgressCallback : public GIT::ProgressCallback
 {
 public:
-    virtual void progress(uint32_t receivedBytes, uint32_t receivedObjects, uint32_t totalObjects) override;
+    virtual void progressCallback(uint32_t receivedBytes, uint32_t receivedObjects, uint32_t totalObjects) override;
 };
 
 #endif // EXAMPLES_H

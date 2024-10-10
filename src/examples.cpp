@@ -154,7 +154,7 @@ void Examples::commitSomeChangesAndResetHard()
     verifyNothingModified();
 
     ObjectId headObjectId = _repository->head().reference().objectId();
-    Commit headCommit = _repository->lookupCommit(headObjectId);
+    Commit headCommit = _repository->findCommit(headObjectId);
     if(headCommit.isNull()) {
         throw TestException("Failed to find head commit");
     }
@@ -258,7 +258,7 @@ void Examples::createAndDumpSomeDiffs()
     verifyNothingModified();
 
     ObjectId headObjectId = _repository->head().reference().objectId();
-    Commit headCommit = _repository->lookupCommit(headObjectId);
+    Commit headCommit = _repository->findCommit(headObjectId);
     if(headCommit.isNull()) {
         throw TestException("Failed to find head commit");
     }
@@ -279,7 +279,7 @@ void Examples::createAndDumpSomeDiffs()
 
     CompareOptions compareOptions;
     compareOptions.setSimilarity(SimilarityOptions::none());
-    DiffDelta::List deltas = _repository->getDiffDeltas(compareOptions);
+    DiffDelta::List deltas = _repository->diffDeltas(modified);
     for(const DiffDelta& delta : deltas) {
         _stdout << QString("old file: %1  new file: %2").arg(delta.oldFile().path()).arg(delta.newFile().path()) << Qt::endl;
         for(const DiffHunk& hunk : delta.hunks()) {
@@ -324,7 +324,7 @@ void Examples::modifyFile(const QString& relativePath)
     }
 }
 
-void ExampleProgressCallback::progress(uint32_t receivedBytes, uint32_t receivedObjects, uint32_t totalObjects)
+void ExampleProgressCallback::progressCallback(uint32_t receivedBytes, uint32_t receivedObjects, uint32_t totalObjects)
 {
     qDebug() << QString("Clone progress: received %1 bytes  %2 of %3 objects").arg(receivedBytes).arg(receivedObjects).arg(totalObjects);
 }
