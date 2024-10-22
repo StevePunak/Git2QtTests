@@ -6,23 +6,29 @@
 
 #include <git2qt/repository.h>
 
+#include <Kanoop/datetimeutil.h>
+
 #include "examples.h"
+#include "repocopy.h"
 #include "testexception.h"
 #include "testthread.h"
 
 const QString keyHelp               = "help";
 const QString keyLocalPath          = "local-path";
+const QString keyDestPath           = "dest-path";
 const QString keyVerbose            = "verbose";
 
 const QString verbAuto              = "auto";
 const QString verbClone             = "clone";
 const QString verbExamples          = "examples";
+const QString verbRecreate          = "recreate";
 const QString verbTest              = "test";
 
 const QStringList VALID_VERBS =
 {
     verbAuto,
     verbClone,
+    verbRecreate,
     verbExamples,
     verbTest,
 };
@@ -64,6 +70,7 @@ int main(int argc, char *argv[])
         // -------------------- Long Options
         // Short,Long                   // Description                                      // Key name                 // Default
         {{ keyLocalPath, },             "Local repo path",                                   keyLocalPath,                                 },
+        {{ keyDestPath, },              "Destination repo path",                             keyDestPath,                                  },
     });
 
     parser.process(application);
@@ -92,6 +99,14 @@ int main(int argc, char *argv[])
         if(verb == verbExamples) {
             Examples examples(localPath);
             examples.unstageAllFiles();
+        }
+        else if(verb == verbRecreate) {
+            QString destinationPath = parser.value(keyDestPath);
+            if(destinationPath.isEmpty()) {
+                throw TestException("No destination path specified");
+            }
+            RepoCopy copier(localPath, destinationPath, DateTimeUtil::fromString("2022-01-01T12:00:00Z"));
+            copier.execute();
         }
         else if(verb == verbAuto) {
             Examples examples(localPath);

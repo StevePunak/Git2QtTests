@@ -181,7 +181,7 @@ void Examples::commitSomeChangesAndResetHard()
         throw TestException("Failed to commit");
     }
 
-    if(_repository->reset(headCommit, ResetHard) == false) {
+    if(_repository->resetCommit(headCommit, ResetHard) == false) {
         throw TestException("Failed to reset");
     }
 }
@@ -290,7 +290,7 @@ void Examples::createAndDumpSomeDiffs()
         }
     }
 
-    if(_repository->reset(headCommit, ResetHard) == false) {
+    if(_repository->resetCommit(headCommit, ResetHard) == false) {
         throw TestException("Failed to reset");
     }
 }

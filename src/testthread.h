@@ -15,6 +15,15 @@ private:
     virtual void threadStarted() override;
 
     void openRepository();
+
+    void checkoutTest();
+    void mergeTest();
+    void tagTest();
+    void headCommitTest();
+    void deleteReferenceTest();
+    void amendMessageTest();
+    void submoduleTest();
+    void diffTest();
     void pullTest();
 
     QString _localPath;
