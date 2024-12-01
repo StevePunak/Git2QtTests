@@ -16,6 +16,7 @@ private:
 
     void openRepository();
 
+    void aheadBehindTest();
     void checkoutTest();
     void mergeTest();
     void tagTest();

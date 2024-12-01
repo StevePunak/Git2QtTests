@@ -1,8 +1,12 @@
+#include <iostream>
+#include <set>
 #include "testthread.h"
+
 
 #include <Kanoop/commonexception.h>
 
 using namespace GIT;
+using namespace std;
 
 TestThread::TestThread(const QString& localPath) :
     AbstractThreadClass("testthread"),
@@ -19,7 +23,9 @@ void TestThread::threadStarted()
     {
         openRepository();
 
-        checkoutTest();
+        aheadBehindTest();
+        // algoTest();
+        // checkoutTest();
         // mergeTest();
         // tagTest();
         // headCommitTest();
@@ -39,7 +45,7 @@ void TestThread::threadStarted()
 
 void TestThread::openRepository()
 {
-_localPath = "/home/spunak/tmp/gitlab/DestRepo";
+_localPath = "/home/spunak/src/punak/TrackBotQt/KanoopCommon";
     bool isRepo = Repository::isRepository(_localPath); Q_UNUSED(isRepo);
     _repository = new Repository(_localPath);
     if(_repository->isNull()) {
@@ -49,6 +55,13 @@ _localPath = "/home/spunak/tmp/gitlab/DestRepo";
     connect(_repository, &Repository::progress, this, &TestThread::onProgress);
     _repository->setCredentialResolver(&_credentialsResolver);
 
+}
+
+
+
+void TestThread::aheadBehindTest()
+{
+    TrackingDetails result = _repository->currentBranch().trackingDetails();
 }
 
 void TestThread::checkoutTest()
